@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G R Monish - Full-Stack MERN Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideDown 1s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.2); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            text-decoration: none;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Education */
+        .education-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .education-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .education-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #4ecdc4;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-institution {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-details {
+            color: #b0b0b0;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-category h3 {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: linear-gradient(45deg, #ff6b6b20, #4ecdc420);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #4ecdc4;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .project-description {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Achievements */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .achievement-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4ecdc4;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-description {
+            color: #b0b0b0;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .achievement-card {
+                text-align: left;
+            }
+        }
+
+        /* Floating Animation */
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">G.R Monish</div>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#achievements">Achievements</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content floating">
+                    <h1 class="hero-title">Full-Stack MERN Developer</h1>
+                    <p class="hero-subtitle">Architecting scalable web solutions with modern technologies</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/gr-monish-291006359/" class="social-link">
+                            <span>🔗</span> LinkedIn
+                        </a>
+                        <a href="https://github.com/Monish892/" class="social-link">
+                            <span>💻</span> GitHub
+                        </a>
+                        <a href="https://leetcode.com/" class="social-link">
+                            <span>🧠</span> LeetCode
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="education">
+            <div class="container">
+                <h2 class="section-title">Education</h2>
+                <div class="education-item">
+                    <div class="education-title">Kalvium's UG Program in Computer Science</div>
+                    <div class="education-institution">Bachelor of Technology | Software Product Engineering</div>
+                    <div class="education-details">2024 - 2028 | Currently Pursuing</div>
+                </div>
+                <div class="education-item">
+                    <div class="education-title">Computer Science & Engineering</div>
+                    <div class="education-institution">Lovely Professional University, Punjab</div>
+                    <div class="education-details">CGPA: 9.5/10 | Excellence in Academic Performance</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills">
+            <div class="container">
+                <h2 class="section-title">Technical Arsenal</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>🚀 Programming Languages</h3>
+                        <div class="skills-list">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">CSS3</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>⚡ Frontend Technologies</h3>
+                        <div class="skills-list">
+                            <span class="skill-tag">React.js</span>
+                            <span class="skill-tag">Axios</span>
+                            <span class="skill-tag">DOM Manipulation</span>
+                            <span class="skill-tag">Context API</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>🔧 Backend Technologies</h3>
+                        <div class="skills-list">
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Express.js</span>
+                            <span class="skill-tag">RESTful APIs</span>
+                            <span class="skill-tag">JWT Authentication</span>
+                            <span class="skill-tag">CORS</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>🗄️ Database & Cloud</h3>
+                        <div class="skills-list">
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">Mongoose ODM</span>
+                            <span class="skill-tag">Render Cloud</span>
+                            <span class="skill-tag">MongoDB Atlas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-title">Personal Notes Application</div>
+                        <div class="project-tech">MERN Stack | JWT | MongoDB Atlas</div>
+                        <div class="project-description">
+                            A secure full-stack note management system serving 100+ users with 99.9% uptime. 
+                            Features JWT authentication, RESTful API with <200ms response time, and real-time 
+                            state management supporting 50+ notes per user.
+                        </div>
+                        <div class="project-links">
+                            <a href="https://personal-notes-app-1-vdlu.onrender.com/" class="project-link">Live Demo</a>
+                            <a href="https://github.com/Monish892/Personal-Notes-App" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">E-Commerce Product Catalog</div>
+                        <div class="project-tech">React.js | Context API | JSON Server</div>
+                        <div class="project-description">
+                            Product listing application with advanced search, filter, and cart functionality 
+                            supporting 200+ products. Implemented persistent storage and checkout simulation 
+                            achieving 100% state consistency.
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">Personal Portfolio Website</div>
+                        <div class="project-tech">HTML5 | CSS3 | JavaScript | Netlify</div>
+                        <div class="project-description">
+                            Responsive portfolio showcasing projects with 100% mobile compatibility. 
+                            SEO optimized achieving 95+ Google PageSpeed Insights score across all metrics.
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Visit Site</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements" class="achievements">
+            <div class="container">
+                <h2 class="section-title">Achievements & Leadership</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-card">
+                        <span class="achievement-icon">🏆</span>
+                        <div class="achievement-title">National-Level Kabaddi Player</div>
+                        <div class="achievement-description">
+                            Represented KV Thanjavur at National Sports Competition for Chennai regional team. 
+                            Demonstrated exceptional leadership and teamwork in high-pressure environments.
+                        </div>
+                    </div>
+                    <div class="achievement-card">
+                        <span class="achievement-icon">🌟</span>
+                        <div class="achievement-title">Open Source Contributor</div>
+                        <div class="achievement-description">
+                            Contributed to 5+ GitHub repositories with bug fixes and feature enhancements. 
+                            Maintained personal GitHub with 90% green commit history and 15+ pinned repositories.
+                        </div>
+                    </div>
+                    <div class="achievement-card">
+                        <span class="achievement-icon">💡</span>
+                        <div class="achievement-title">Competitive Programmer</div>
+                        <div class="achievement-description">
+                            Solved 75+ DSA problems on LeetCode with 85% acceptance rate. 
+                            Achieved 1200+ rating focusing on Array, String, and Tree-based algorithms.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 G R Monish. Crafted with passion for innovation.</p>
+            <p>Available for internships and entry-level full-stack developer positions</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Progress Indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Intersection Observer for Section Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add parallax effect to floating elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.floating');
+            
+            parallaxElements.forEach(element => {
+                const speed = 0.5;
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Add dynamic typing effect to hero title
+        const heroTitle = document.querySelector('.hero-title');
+        const originalText = heroTitle.textContent;
+        heroTitle.textContent = '';
+
+        function typeWriter(text, element, speed = 100) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Start typing animation after a delay
+        setTimeout(() => {
+            typeWriter(originalText, heroTitle, 80);
+        }, 1000);
+
+        // Add hover effect to project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) rotateX(5deg)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotateX(0deg)';
+            });
+        });
+
+        // Add click animation to skill tags
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'pulse 0.6s ease-in-out';
+                }, 10);
+            });
+        });
+
+        // Add CSS for pulse animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
