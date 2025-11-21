@@ -1,5 +1,6 @@
 import { ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import profilephoto from './port.jpg'
 
 const Hero = () => {
   const [displayedText, setDisplayedText] = useState('');
@@ -107,27 +108,26 @@ const Hero = () => {
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
             <div className="relative group">
               {/* Glowing Border Effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
               
               {/* Image Container */}
               <div className="relative">
-                <div className="relative w-80 h-96 sm:w-96 sm:h-[28rem] rounded-2xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
+                <div className="relative w-80 h-80 sm:w-96 sm:h-96 rounded-full overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl border-4 border-slate-700/50">
                   <img
-                    src="./port.jpg"
+                    src={profilephoto}
                     alt="Monish - Full Stack Developer"
                     className="w-full h-full object-cover object-center mix-blend-lighten"
                     style={{
-                      filter: 'contrast(1.1) brightness(1.1)',
-                      maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)'
+                      filter: 'contrast(1.1) brightness(1.1)'
                     }}
                   />
                   {/* Overlay gradient for better blending */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-60"></div>
                 </div>
                 
                 {/* Decorative Elements */}
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-cyan-500/20 rounded-full blur-2xl"></div>
-                <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl"></div>
+                <div className="absolute -top-8 -left-8 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
               </div>
             </div>
           </div>
