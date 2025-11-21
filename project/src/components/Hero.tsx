@@ -113,7 +113,7 @@ const Hero = () => {
               <div className="relative">
                 <div className="relative w-80 h-96 sm:w-96 sm:h-[28rem] rounded-2xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
                   <img
-                    src="https://i.ibb.co/ZHWzJGq/image.jpg"
+                    src="./port.jpg"
                     alt="Monish - Full Stack Developer"
                     className="w-full h-full object-cover object-center mix-blend-lighten"
                     style={{
