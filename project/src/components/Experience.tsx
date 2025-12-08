@@ -4,9 +4,9 @@ const Experience = () => {
   const education = [
     {
       title: 'Bachelor of Computer Science',
-      institution: 'University of Technology',
-      period: '2016 - 2020',
-      description: 'Graduated with honors. Specialized in Software Engineering and Artificial Intelligence.',
+      institution: 'Lovely Professional University',
+      period: '2024 - 2028',
+      description: 'Specialized in Software Engineering and Artificial Intelligence.',
       achievements: [
         'GPA: 3.8/4.0',
         'Dean\'s List all semesters',

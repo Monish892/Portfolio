@@ -63,7 +63,7 @@ function App() {
                 className="text-slate-400 hover:text-cyan-400 transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="mailto:contact@example.com"
+              <a href="jayachitraramesh08@gmail.com"
                 className="text-slate-400 hover:text-cyan-400 transition-colors">
                 <Mail className="w-5 h-5" />
               </a>
